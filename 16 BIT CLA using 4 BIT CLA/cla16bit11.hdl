@@ -1,0 +1,30 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/cla16bit11.hdl
+
+CHIP cla16bit11 {
+  IN a[16], b[16], c0;
+  OUT sum[16], Cout;
+
+  PARTS:
+cla4Bit10(a=a[0..3], b=b[0..3], c0=c0, gg=g0, gp=p0, sum=sum[0..3]);
+
+And(a=c0, b=p0, out=q1);
+Or(a=q1, b=g0, out=c4);
+
+cla4Bit10(a=a[4..7], b=b[4..7], c0=c4, gg=g1, gp=p1, sum=sum[4..7]);
+
+And(a=c4, b=p1, out=q2);
+Or(a=q2, b=g1, out=c8);
+
+cla4Bit10(a=a[8..11], b=b[8..11], c0=c8, gg=g2, gp=p2, sum=sum[8..11]);
+
+And(a=c8, b=p2, out=q3);
+Or(a=q3, b=g2, out=c12);
+
+cla4Bit10(a=a[12..15], b=b[12..15], c0=c12, gg=g3, gp=p3, sum=sum[12..15]);
+
+And(a=c12, b=p3, out=q4);
+Or(a=q4, b=g3, out=Cout);
+}

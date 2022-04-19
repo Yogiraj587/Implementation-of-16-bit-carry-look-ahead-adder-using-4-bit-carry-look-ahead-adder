@@ -1,0 +1,32 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: carrylookAheadAdder.hdl
+
+
+CHIP carrylookAheadAdder{
+     IN a[4], b[4], c0;
+     OUT s[4], c4;
+   PARTS:
+   	FAusingHA(a=a[0], b=b[0], Cin=c0, s=s[0]);
+        
+        Xor(a=a[0], b=b[0], out=x1);
+        And(a=x1, b=c0, out=y1);
+        And(a=a[0], b=b[0], out=z1);
+        Or(a=y1, b=z1, out=c1);
+
+       FAusingHA(a=a[1], b=b[1], Cin=c1, s=s[1]);
+
+        Xor(a=a[1], b=b[1], out=x2);
+        And(a=x2, b=c1, out=y2);
+        And(a=a[1], b=b[1], out=z2);
+        Or(a=y2, b=z2, out=c2);
+
+        FAusingHA(a=a[2], b=b[2], Cin=c2, s=s[2]);
+
+         Xor(a=a[2], b=b[2], out=x3);
+         And(a=x3, b=c2, out=y3);
+         And(a=a[2], b=b[2], out=z3);
+         Or(a=y3, b=z3, out=c3);
+  
+        FAusingHA(a=a[3], b=b[3], Cin=c3, s=s[3], Cout=c4);}

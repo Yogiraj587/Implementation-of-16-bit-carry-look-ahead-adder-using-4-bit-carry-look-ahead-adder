@@ -1,0 +1,66 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/cla4Bit10.hdl
+
+CHIP cla4Bit10 {
+   IN a[4], b[4], c0;
+   OUT gg, gp, sum[4];
+
+   PARTS:
+Xor(a=a[0],b=b[0],out=p0);
+And(a=a[0],b=b[0],out=g0);
+
+Xor(a=a[1],b=b[1],out=p1);
+And(a=a[1],b=b[1],out=g1);
+
+Xor(a=a[2],b=b[2],out=p2);
+And(a=a[2],b=b[2],out=g2);
+
+Xor(a=a[3],b=b[3],out=p3);
+And(a=a[3],b=b[3],out=g3);
+
+And(a=p0, b=p1, out=x1);
+And(a=p2, b=p3, out=x2);
+And(a=x1, b=x2, out=gp);    //  For Group Propagation, we can also use And4Input
+
+
+And(a=g0, b=p1, out=x3);
+And(a=p2, b=p3, out=x4);
+And(a=x3, b=x4, out=y1);
+
+And(a=g1, b=p2, out=x5);
+And(a=x5, b=p3, out=y2);
+
+And(a=g2, b=p3, out=y3);
+
+Or(a=g3, b=y3, out=z1);
+Or(a=y2, b=y1, out=z2);
+Or(a=z1, b=z2, out=gg);   //  For Group Generation
+
+// For finding out the sum of 2 4-bit numbers
+
+   FAusingHA(a=a[0], b=b[0], Cin=c0, s=sum[0], Cout=c1);
+
+   Xor(a=a[0], b=b[0], out=m1);
+   And(a=m1, b=c1, out=n1);
+   And(a=a[0], b=b[0], out=e1);
+   Or(a=n1, b=e1, out=c2);
+   
+
+   FAusingHA(a=a[1], b=b[1], Cin=c2, s=sum[1]);
+
+   Xor(a=a[1], b=b[1], out=m2);
+   And(a=m2, b=c2, out=n2);
+   And(a=a[1], b=b[1], out=e2);
+   Or(a=n2, b=e2, out=c3);
+ 
+   FAusingHA(a=a[2], b=b[2], Cin=c3, s=sum[2]);
+
+   Xor(a=a[2], b=b[2], out=m3);
+   And(a=m3, b=c3, out=n3);
+   And(a=a[2], b=b[2], out=e3);
+   Or(a=n3, b=e3, out=c4);
+
+   FAusingHA(a=a[3], b=b[3], Cin=c4, s=sum[3], Cout=c5);
+}

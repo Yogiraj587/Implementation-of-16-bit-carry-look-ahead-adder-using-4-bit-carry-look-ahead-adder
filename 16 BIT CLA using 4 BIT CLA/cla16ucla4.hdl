@@ -1,0 +1,16 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: carrylookAheadAdder.hdl
+
+
+CHIP cla16ucla4 {
+     IN a[16], b[16], c0;
+     OUT s[16], c1;
+
+  PARTS:
+     carrylookAheadAdder(a=a[0..3], b=b[0..3], c0=c0,s=s[0..3], c4=x1);
+     carrylookAheadAdder(a=a[4..7], b=b[4..7], c0=x1, s=s[4..7], c4=x2);
+     carrylookAheadAdder(a=a[8..11], b=b[8..11], c0=x2, s=s[8..11], c4=x3);
+     carrylookAheadAdder(a=a[12..15], b=b[12..15], c0=x3, s=s[12..15], c4=c1);
+}
